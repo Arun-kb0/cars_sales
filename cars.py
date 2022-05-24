@@ -2,6 +2,7 @@ from functools import total_ordering
 import os
 import json
 from collections import defaultdict
+import getpass
 import report
 import emails
 
@@ -47,7 +48,7 @@ def dic_to_lst():
     return lst
 
 def create_report(summary):
-    file='car.pdf'
+    file='docs/car.pdf'
     title='Sale report'
     contents="<br/>".join(summary)
     table_content= dic_to_lst()
@@ -56,18 +57,19 @@ def create_report(summary):
     print('report ok')
 
 def send_email(summary):
-    sender='12arunkb@gmail.com'
-    recipient= 'arun.kb076@gmail.com'
-    pswd ='qhghpgclfhsresxa'
+    sender=str(input('enter sender mail id : '))
+    recipient= str(input('enter recipient mail id : '))
+    pswd =getpass.getpass()
+    print(pswd)
     subject = 'Sales report'
     body = "\n".join(summary)
-    attachment = 'car.pdf'
+    attachment = 'docs/car.pdf'
 
-    emails.genrate_email(sender, recipient, subject, body, attachment,pswd)
+    #emails.genrate_email(sender, recipient, subject, body, attachment,pswd)
 
 if __name__ == '__main__' :
 
-    with open('car_details.json') as j:
+    with open('tmp/car_details.json') as j:
         cars = json.load(j)
 
     summary=process_data()
