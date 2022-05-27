@@ -1,4 +1,5 @@
-from functools import total_ordering
+#!/usr/bin/env python3
+
 import os
 import json
 from collections import defaultdict
@@ -7,6 +8,7 @@ import report
 import emails
 
 def process_data():
+    print('processing data....')
     
     total_sales=0
     dic=defaultdict(int)
@@ -74,15 +76,16 @@ def create_report(summary):
     table_content= dic_to_lst()
 
     report.generate_report(file,title,contents, table_content)
-    print('report ok')
+    
 
 def create_linechart(year,data):
     file='docs/line_chart.pdf'
     summary='Sales chart'
     report.generate_linechart(file=file,summary=summary,year_list=year,data_list=data)
-    print('line chart ok')
+    
 
 def send_email(summary):
+    print('\nenter details')
     sender=str(input('enter sender mail id : '))
     recipient= str(input('enter recipient mail id : '))
     pswd =getpass.getpass()
@@ -90,8 +93,10 @@ def send_email(summary):
     subject = 'Sales report'
     body = "\n".join(summary)
     attachment = 'docs/car.pdf'
+    attachment2= 'docs/line_chart.pdf'
 
-    #emails.genrate_email(sender, recipient, subject, body, attachment,pswd)
+    emails.genrate_email(sender, recipient, subject, body, attachment,attachment2,pswd)
+
 
 if __name__ == '__main__' :
 
@@ -99,6 +104,7 @@ if __name__ == '__main__' :
         cars = json.load(j)
 
     summary,year,data=process_data()
-    #create_report(summary)
-    #send_email(summary)
+    create_report(summary)
     create_linechart(year,data)
+    send_email(summary)
+    

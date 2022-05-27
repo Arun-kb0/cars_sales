@@ -7,7 +7,10 @@ from reportlab.lib import colors
 from reportlab.graphics.charts.linecharts import HorizontalLineChart
 from reportlab.graphics.shapes import Drawing
 
+#cars report
 def generate_report(file,title, summary, table_content ):
+    print('generating cars report....')
+
     report= SimpleDocTemplate(file)
     styles= getSampleStyleSheet()
 
@@ -23,7 +26,8 @@ def generate_report(file,title, summary, table_content ):
 
 #line chart
 def generate_linechart(file,summary,data_list,year_list):
-    
+    print('generating linechart....')
+
     draw= Drawing(500*500)
     report=SimpleDocTemplate(file)
     styles=getSampleStyleSheet()
